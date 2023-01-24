@@ -47,7 +47,7 @@ public class ProductController {
     ) {
         try {
             ResponseEntity
-                    .status(HttpStatus.CREATED)
+                    .status(HttpStatus.ACCEPTED)
                     .body(productService.update(id, product));
         } catch (Exception e) {
             e.printStackTrace();
