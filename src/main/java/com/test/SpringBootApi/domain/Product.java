@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="products")
@@ -23,6 +24,8 @@ public class Product {
 
     @Column(name = "price")
     private int price;
+
+
 
     public Product(String productName, int price) {
         this.productName = productName;

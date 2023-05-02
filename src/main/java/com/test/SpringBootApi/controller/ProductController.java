@@ -41,9 +41,9 @@ public class ProductController {
     @PostMapping("/products")
     public ResponseEntity<Product> createProduct(@RequestBody ProductRequestDto productRequestDto) {
         try {
-            ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(productService.save(productRequestDto));
+            Product product = productService.save(productRequestDto);
+            System.out.println(product.getProductName());
+            return ResponseEntity.ok(product);
         } catch (Exception e) {
             e.printStackTrace();
         }
