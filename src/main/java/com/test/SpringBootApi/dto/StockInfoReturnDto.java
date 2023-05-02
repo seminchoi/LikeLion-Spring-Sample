@@ -15,12 +15,12 @@ import lombok.Setter;
 public class StockInfoReturnDto {
 
     private int stockQuantity;
-    private Product product;
-    private Store store;
+    private ProductReturnDto product;
+    private StoreReturnDto store;
 
     public StockInfoReturnDto(StockInfo stockInfo) {
         this.stockQuantity = stockInfo.getStockQuantity();
-        this.product = stockInfo.getProduct();
-        this.store = stockInfo.getStore();
+        this.product = new ProductReturnDto(stockInfo.getProduct());
+        this.store = new StoreReturnDto(stockInfo.getStore());
     }
 }
