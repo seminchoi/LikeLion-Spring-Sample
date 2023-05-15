@@ -1,11 +1,15 @@
 package com.test.SpringBootApi.service;
 
 import com.test.SpringBootApi.domain.Product;
+import com.test.SpringBootApi.dto.ProductReturnDto;
 import com.test.SpringBootApi.respository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -30,12 +34,27 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
+    public List<ProductReturnDto> findAll(){
+        List<Product> productList = productRepository.findAll();
+//        List<ProductReturnDto> productReturnDtoList = new ArrayList<>();
+//
+//        for (Product product : productList) {
+//            productReturnDtoList.add(new ProductReturnDto(product));
+//        }
+//
+        return productList.stream().map(ProductReturnDto::new).collect(Collectors.toList());
+    }
+
     @Override
-    public Optional<Product> findById(Long id) {
+    public ProductReturnDto findById(Long id) {
         try {
             Optional<Product> productData = productRepository.findById(id);
+
             if (productData.isPresent()) {
-                return productData;
+                Product product = productData.get();
+                ProductReturnDto productReturnDto = new ProductReturnDto(product);
+
+                return productReturnDto;
             }
         } catch(Exception e) {
             e.printStackTrace();

@@ -1,5 +1,6 @@
 package com.test.SpringBootApi.controller;
 
+import com.test.SpringBootApi.dto.ProductReturnDto;
 import com.test.SpringBootApi.service.ProductServiceImpl;
 import com.test.SpringBootApi.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin("*")
@@ -18,7 +20,7 @@ public class ProductController {
     ProductServiceImpl productService;
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<Optional<Product>> getProductById(@PathVariable("id") long id) {
+    public ResponseEntity<ProductReturnDto> getProductById(@PathVariable long id) {
 
         try {
             return ResponseEntity.ok(productService.findById(id));
@@ -28,10 +30,23 @@ public class ProductController {
         return null;
     }
 
+    @GetMapping("/products")
+    public ResponseEntity<List<ProductReturnDto>> getAllProduct(){
+        List<ProductReturnDto> productReturnDtoList = productService.findAll();
+
+        return ResponseEntity.ok(productReturnDtoList);
+    }
+
+//    @GetMapping("/products")
+//    public ResponseEntity<Optional<Product>> getProductByIdQuery(
+//            @RequestParam(name= "id") Long id){
+//        return ResponseEntity.ok(productService.findById(id));
+//    }
+
     @PostMapping("/products")
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         try {
-            ResponseEntity
+            return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(productService.save(product));
         } catch (Exception e) {
